@@ -1,6 +1,6 @@
 package models;
 
-import handler.impl.ConfigFiled;
+import handler.ConfigFiled;
 
 import java.util.ArrayList;
 import java.util.Random;

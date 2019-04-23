@@ -1,4 +1,4 @@
-import handler.impl.IterationProviderFromConfig;
+import handler.IterationProviderFromConfig;
 import org.junit.Assert;
 import org.junit.Test;
 

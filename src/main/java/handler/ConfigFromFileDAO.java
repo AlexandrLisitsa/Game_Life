@@ -1,14 +1,12 @@
-package handler.impl;
+package handler;
 
-import handler.ConfigFieldHandler;
 import models.Cell;
 
 import java.io.*;
 import java.util.Properties;
 import java.util.Scanner;
 
-public class ConfigFromFileDAO implements ConfigFieldHandler {
-    @Override
+public class ConfigFromFileDAO {
     public ConfigFiled getConfig() {
         ConfigFiled configFiled = new ConfigFiled();
         int height=0;

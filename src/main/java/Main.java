@@ -1,10 +1,9 @@
 import game.Game;
 import handler.ConfigFieldHandler;
 import handler.DataExportProvider;
-import handler.impl.ConfigFromFileDAO;
+import handler.ConfigFromFileDAO;
 import handler.IterationHandler;
-import handler.impl.DataToFile;
-import handler.impl.IterationProviderFromConfig;
+import handler.IterationProviderFromConfig;
 import models.Field;
 
 public class Main {

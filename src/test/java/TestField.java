@@ -1,4 +1,4 @@
-import handler.impl.ConfigFromFileDAO;
+import handler.ConfigFromFileDAO;
 import models.Field;
 import org.junit.Assert;
 import org.junit.Test;

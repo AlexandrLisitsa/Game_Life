@@ -1,10 +1,7 @@
-import handler.impl.ConfigFiled;
-import handler.impl.ConfigFromFileDAO;
-import models.Cell;
+import handler.ConfigFiled;
+import handler.ConfigFromFileDAO;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.lang.reflect.AccessibleObject;
 
 public class TestConfigFromFileDAO {
 

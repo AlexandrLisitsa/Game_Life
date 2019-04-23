@@ -1,15 +1,14 @@
-package handler.impl;
+package handler;
 
 import game.Game;
-import handler.DataExportProvider;
 import models.Cell;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class DataToFile implements DataExportProvider {
+public class DataToFile {
 
-    @Override
+
     public void toFile(String directory, Game game) {
         ConfigFiled configFiled = game.getConfigFiled();
         StringBuilder stringBuilder = new StringBuilder();
