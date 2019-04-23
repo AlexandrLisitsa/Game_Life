@@ -12,114 +12,66 @@ public class Game {
 
     private Field field;
 
-    private ArrayList<ArrayList<Cell>> history = new ArrayList<>();
+    private ArrayList<Cell[][]> history = new ArrayList<>();
 
-    public Game(Field field){
-        this.field=field;
+    public Game(Field field) {
+        this.field = field;
     }
 
-    public void nextGeneration(){
-        for (int j = 0; j < field.getCurrentGeneration().size(); j++) {
-            int cellNeighborsCount = getCellNeighborsCount2(j);
-            Cell cell = field.getCurrentGeneration().get(j);
+    public void nextGeneration() {
+        int height = field.getConfigFiled().getHeight();
+        int width = field.getConfigFiled().getWidth();
 
-            if((cell.isAlive())&&cellNeighborsCount>3||cellNeighborsCount<2){
-                field.getSecondGeneration().add(new Cell(false));
-            }
-            else if((cell.isAlive())&&cellNeighborsCount==2||cellNeighborsCount==3){
-                field.getSecondGeneration().add(new Cell(true));
-            }
-            else if((!cell.isAlive()&&cellNeighborsCount==3)){
-                field.getSecondGeneration().add(new Cell(true));
-            }
-            else if((!cell.isAlive())&&cellNeighborsCount<3||cellNeighborsCount>3){
-                field.getSecondGeneration().add(new Cell(false));
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                int nCnt = getCellNeighborsCount(i, j);
+                Cell cell = field.getCurrentGeneration()[i][j];
+                if (cell.isAlive() && (nCnt == 2 || nCnt == 3)) {
+                    putCellOnSecondGeneration(i, j, new Cell(true));
+                } else if (cell.isAlive() && (nCnt < 2 || nCnt > 3)) {
+                    putCellOnSecondGeneration(i, j, new Cell(false));
+                } else if (!cell.isAlive() && nCnt == 3) {
+                    putCellOnSecondGeneration(i, j, new Cell(true));
+                } else {
+                    putCellOnSecondGeneration(i, j, new Cell(false));
+                }
             }
         }
-        drawField();
+        history.add(field.getSecondGeneration());
         replaceCellsArray();
-        history.add(field.getCurrentGeneration());
-    }
-
-    private void drawField() {
-        int counter=0;
-        for (Cell cell : field.getCurrentGeneration()) {
-            System.out.print(cell.getSymbol());
-            counter++;
-            if(counter>field.getConfigFiled().getWidth()-1){
-                System.out.println();
-                counter=0;
-            }
-        }
-        System.out.println();
-        System.out.println();
     }
 
     private void replaceCellsArray() {
-        field.getCurrentGeneration().clear();
-        field.getCurrentGeneration().addAll(field.getSecondGeneration());
-        field.getSecondGeneration().clear();
+        field.setCurrentGeneration(field.getSecondGeneration());
+        field.setSecondGeneration(new Cell[field.getConfigFiled().getHeight()][field.getConfigFiled().getWidth()]);
     }
 
 
-    private int getCellNeighborsCount2(int cell_position){
-        int counter=0;
-        for(int i=(field.getConfigFiled().getWidth()*-1);
-                i<field.getConfigFiled().getWidth()*2;
-                i+=field.getConfigFiled().getWidth()){
-            int startPos=-1;
-            int endPos=2;
-            if(cell_position%field.getConfigFiled().getWidth()==0)startPos=0;
-            else if((cell_position+1)%(field.getConfigFiled().getWidth())==0)endPos=1;
-            else if(cell_position==0){
-             startPos=-1;endPos=2;
-            }
-            for (int j=startPos;j<endPos;j++){
-                int expression=cell_position-i+j;
-                if(expression>=0&&expression<field.getCurrentGeneration().size()-1){
-                    if(field.getCurrentGeneration().get(expression).isAlive()&&expression!=cell_position){
-                        counter++;
-                    }
+    int getCellNeighborsCount(int height, int width) {
+        int counter = 0;
+        for (int i = height - 1; i < height + 2; i++) {
+            for (int k = width - 1; k < width + 2; k++) {
+                if ((i >= 0 && i < field.getConfigFiled().getHeight()) &&
+                        (k >= 0 && k < field.getConfigFiled().getWidth())) {
+                    if (i == height && k == width) continue;
+                    if (field.getCurrentGeneration()[i][k].isAlive()) counter++;
                 }
             }
         }
         return counter;
     }
 
-    private int getCellNeighborsCount(int cell_position){
-        int counter=0;
-        ConfigFiled configFiled = field.getConfigFiled();
-        for (int i = -1; i < 2; i++) {
-            if(cell_position-configFiled.getWidth()-i>=0&&
-                    cell_position-configFiled.getWidth()-i< field.getCurrentGeneration().size()&&
-                    field.getCurrentGeneration().get(cell_position-configFiled.getWidth()-i).isAlive()){
-                counter++;
-            }
-            if(cell_position+configFiled.getWidth()-i>=0&&
-                    cell_position+configFiled.getWidth()-i< field.getCurrentGeneration().size()&&
-                    field.getCurrentGeneration().get(cell_position+configFiled.getWidth()-i).isAlive()){
-                counter++;
-            }
-        }
-        if(cell_position-1>=0&&
-                cell_position+1< field.getCurrentGeneration().size()&&
-                field.getCurrentGeneration().get(cell_position-1).isAlive()){
-            counter++;
-        }
-        if(cell_position-1>=0&&
-                cell_position+1< field.getCurrentGeneration().size()&&
-                field.getCurrentGeneration().get(cell_position+1).isAlive()){
-            counter++;
-        }
-        return counter;
-    }
 
-    public ArrayList<ArrayList<Cell>> getHistory() {
+    public ArrayList<Cell[][]> getHistory() {
         return history;
     }
 
-    public ConfigFiled getConfigFiled(){
+    public ConfigFiled getConfigFiled() {
         return field.getConfigFiled();
+    }
+
+    private void putCellOnSecondGeneration(int height, int width, Cell cell) {
+        field.getSecondGeneration()[height][width] = cell;
     }
 
 }
