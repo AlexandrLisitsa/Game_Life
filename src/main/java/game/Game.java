@@ -26,14 +26,26 @@ public class Game {
             for (int j = 0; j < width; j++) {
                 int nCnt = getCellNeighborsCount(i, j);
                 Cell cell = field.getCurrentGeneration()[i][j];
-                if (cell.isAlive() && (nCnt == 2 || nCnt == 3)) {
-                    putCellOnSecondGeneration(i, j, new Cell(true));
-                } else if (cell.isAlive() && (nCnt < 2 || nCnt > 3)) {
-                    putCellOnSecondGeneration(i, j, new Cell(false));
-                } else if (!cell.isAlive() && nCnt == 3) {
-                    putCellOnSecondGeneration(i, j, new Cell(true));
+
+                if (cell.isAlive()) {
+                    switch (nCnt) {
+                        case 2:
+                            putCellOnSecondGeneration(i, j, new Cell(true));
+                            break;
+                        case 3:
+                            putCellOnSecondGeneration(i, j, new Cell(true));
+                            break;
+                        default:
+                            putCellOnSecondGeneration(i, j, new Cell(false));
+                    }
                 } else {
-                    putCellOnSecondGeneration(i, j, new Cell(false));
+                    switch (nCnt) {
+                        case 3:
+                            putCellOnSecondGeneration(i, j, new Cell(true));
+                            break;
+                        default:
+                            putCellOnSecondGeneration(i, j, new Cell(false));
+                    }
                 }
             }
         }
