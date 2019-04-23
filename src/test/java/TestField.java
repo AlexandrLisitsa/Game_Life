@@ -1,4 +1,4 @@
-import handler.ConfigFromFileDAO;
+import handler.ConfigFieldFromFileDAO;
 import models.Field;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,7 +17,7 @@ public class TestField {
 
     @Test
     public void testFieldParamConstructor(){
-        Field field = new Field(new ConfigFromFileDAO().getConfig());
+        Field field = new Field(new ConfigFieldFromFileDAO().getConfig());
         Assert.assertNotNull(field.getCurrentGeneration());
         Assert.assertNotNull(field.getSecondGeneration());
         Assert.assertNotNull(field.getConfigFiled());
