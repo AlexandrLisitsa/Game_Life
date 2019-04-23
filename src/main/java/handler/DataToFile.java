@@ -1,5 +1,6 @@
 package handler;
 
+import config.ConfigFiled;
 import game.Game;
 import models.Cell;
 

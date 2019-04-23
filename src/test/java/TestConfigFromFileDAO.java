@@ -1,4 +1,4 @@
-import handler.ConfigFiled;
+import config.ConfigFiled;
 import handler.ConfigFromFileDAO;
 import org.junit.Assert;
 import org.junit.Test;

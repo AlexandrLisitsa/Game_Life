@@ -1,5 +1,6 @@
 package handler;
 
+import config.ConfigFiled;
 import models.Cell;
 
 import java.io.*;

@@ -1,7 +1,7 @@
 package game;
 
 
-import handler.ConfigFiled;
+import config.ConfigFiled;
 import models.Cell;
 import models.Field;
 
